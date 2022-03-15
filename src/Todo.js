@@ -1,15 +1,69 @@
 import React from "react";
 import TodoInput from './TodoInput';
 import TodoList from './TodoList';
+import SubtaskInput from "./SubtaskInput";
 
 export default function Todo()
 {
-    const [todoList, setTodoList] = React.useState([])
+    const tasks = 
+    [
+        {
+            title: "task1",
+            status: 0,
+            subtasks: 
+            [
+                {
+                    title: "subtask1",
+                    status: 0,
+                },
+                {
+                    title: "subtask1",
+                    status: 0,
+                },
+            ]
+        },
+        {
+            title: "task2",
+            status: 0,
+            subtasks: 
+            [
+                {
+                    title: "subtask1",
+                    status: 0,
+                },
+                {
+                    title: "subtask1",
+                    status: 0,
+                },
+            ]
+        },
+    ]
+    const [todoList, setTodoList] = React.useState(tasks)
     const [inputValue, setInputValue] = React.useState("")
+    const [subtask,setSubtask] = React.useState("");
 
     const addItemToList = (input) => {
-        setTodoList([input, ...todoList])
+        let tmptask = {
+            title: input,
+            status: 0,
+            subtasks:[],
+        }
+        setTodoList([tmptask, ...todoList])
         setInputValue("")
+    }
+    const addSubtaskToList = (subtaskValule, index) => {
+        console.log(subtaskValule);
+        const tmpSubtask = 
+        {
+            title: subtaskValule,
+            status: 0,
+        };
+        let tmptask = TodoList[index];
+        tmptask.subtasks = [tmpSubtask, ...tmptask.subtasks];
+        let tmplist = [...todoList];
+        tmplist[index] = tmptask;
+        setTodoList([...tmplist]);
+        setSubtask("")
     }
     const deleteItemFromList = (index) => {
         const tmpTodoList = [...todoList]
@@ -24,7 +78,7 @@ export default function Todo()
         <React.Fragment>
             <h1>Todo</h1>
             <TodoInput inputValue = {inputValue} setInputValue = {setInputValue} addItemToList = {addItemToList} />
-            <TodoList todoList = {todoList} deleteItemFromList = {deleteItemFromList}/>
+            <TodoList todoList = {todoList} deleteItemFromList = {deleteItemFromList} addSubtaskToList = {addSubtaskToList} subtask={subtask} setSubtask={setSubtask}/>
             <button onClick={()=>clearList()}>Clear all</button>
         </React.Fragment>
     )
