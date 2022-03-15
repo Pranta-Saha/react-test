@@ -1,23 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Todo from './Todo';
+
 
 function App() {
+  const [count, setCount] = React.useState(0)
+  const [todoList, setList] = React.useState([])
+  
+  React.useEffect(() => {
+    if(count==5)
+    {
+      setCount(count+10000)
+    }
+  },[count])
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <h1>Hello React</h1>
+        <button onClick={() => setCount(count + 1)}>increment</button>
+        <p>Count: {count}</p>
+        <button onClick={() => setCount(count - 1)}>decrement</button>
+        <br></br>
+        <button onClick={() => setCount(count - count)}>reset</button>
+      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <div>
+        <Todo />
+      </div>
+
     </div>
   );
 }
