@@ -6,14 +6,22 @@ export default function TodoList(props)
 {
     return (
         <div>
-            <ul>
+            <hr></hr>
+            <ol>
                 {props.todoList.map((todo, index) => <li key={index}>{todo.title}
                 <button onClick={()=>props.deleteItemFromList(index)}>Delete</button>
                 <input type="checkbox" name="taskStatus" value={1}/>complete
-                <SubtaskInput index={index} addSubtaskToList={props.addSubtaskToList} subtask={props.subtask} setSubtask={props.setSubtask}/>
-
+                
+                <div>
+                    <ul>
+                        {todo['subtasks'].map((subTask,indx) => <li key={indx}>{subTask.title}
+                        <input type="checkbox" name="subtaskStatus" value={1}/>complete
+                        </li>)}
+                    </ul>
+                </div>
+                <hr></hr>
                 </li>)}
-            </ul>
+            </ol>
         </div>
     )
 }
